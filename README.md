@@ -1,3 +1,3 @@
-### websocket practice
+### SocketIO practice
 
-- This is a project for practicing websocket.
+- This is a project for practicing SocketIO.
