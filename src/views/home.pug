@@ -9,11 +9,9 @@ html(lang="en")
         header
             h1 SocketIO practice
         main
-            form#nickname
-                input(type="text", placeholder="닉네임을 입력하세요.", required)
-                button 저장
-            ul
-            form#message
-                input(type="text", placeholder="메시지를 입력하세요.", required)
-                button 전송
+            div#welcome
+                form
+                    input(placeholder="채팅방 이름", required, type="text")
+                    button 들어가기
+        script(src="/socket.io/socket.io.js")
         script(src="/public/js/app.js")
