@@ -8,21 +8,26 @@ html(lang="en")
     body 
         header
             h1 SocketIO 실시간 채팅
+            h4 Developed by yeohj0710
         main
             div#welcome
                 h4 현재 대화 중인 채팅방 목록
                     ul
                 form
                     input(placeholder="채팅방 이름", required, type="text")
-                    button 들어가기
+                    button#enterButton 들어가기
             div#room 
                 h3
-                ul 
-                form#nickname
-                    input(placeholder="닉네임을 입력하세요.", required, type="text")
-                    button 설정
+                form
+                    div 
+                h5
                 form#message
                     input(placeholder="메시지를 입력하세요.", required, type="text")
                     button 보내기
+                h4 　
+                h4 닉네임 설정
+                form#nickname
+                    input(placeholder="닉네임을 설정하세요.", required, type="text")
+                    button 설정
         script(src="/socket.io/socket.io.js")
         script(src="/public/js/app.js")

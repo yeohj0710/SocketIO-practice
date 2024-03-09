@@ -46,8 +46,35 @@ function publicRooms() {
   return publicRooms;
 }
 
+function getRandomAnimalName() {
+  const animalNames = [
+    "토끼",
+    "고양이",
+    "강아지",
+    "호랑이",
+    "코끼리",
+    "사자",
+    "원숭이",
+    "판다",
+    "독수리",
+    "물개",
+    "하마",
+    "앵무새",
+    "거북이",
+    "다람쥐",
+    "고릴라",
+    "해마",
+    "캥거루",
+    "낙타",
+  ];
+
+  const randomIndex = Math.floor(Math.random() * animalNames.length);
+
+  return animalNames[randomIndex];
+}
+
 wsServer.on("connection", (socket) => {
-  socket.nickname = "익명";
+  socket.nickname = `익명의 ${getRandomAnimalName()}`;
   wsServer.sockets.emit("room_change", publicRooms());
   socket.onAny((event) => {
     console.log(`Socket event: ${event}`);
@@ -71,6 +98,9 @@ wsServer.on("connection", (socket) => {
     done();
   });
   socket.on("nickname", (nickname) => (socket.nickname = nickname));
+  socket.on("get_nickname", () => {
+    socket.emit("send_nickname", socket.nickname);
+  });
 });
 
 const PORT = 8000;
