@@ -1,17 +1,28 @@
+import "regenerator-runtime";
 import http from "http";
-import SocketIO from "socket.io";
+import { Server } from "socket.io";
+import { instrument } from "@socket.io/admin-ui";
 import express from "express";
 
 const app = express();
 
 app.set("view engine", "pug");
-app.set("views", __dirname + "/views");
-app.use("/public", express.static(__dirname + "/public"));
+app.set("views", process.cwd() + "/src/views");
+app.use("/public", express.static(process.cwd() + "/src/public"));
 app.get("/", (_, res) => res.render("home"));
 app.get("/*", (_, res) => res.redirect("/"));
 
 const httpServer = http.createServer(app);
-const wsServer = SocketIO(httpServer);
+const wsServer = new Server(httpServer, {
+  cors: {
+    origin: ["https://admin.socket.io"],
+    credentials: true,
+  },
+});
+
+instrument(wsServer, {
+  auth: false,
+});
 
 function countUsers(roomName) {
   return wsServer.sockets.adapter.rooms.get(roomName)?.size;
@@ -62,6 +73,8 @@ wsServer.on("connection", (socket) => {
   socket.on("nickname", (nickname) => (socket.nickname = nickname));
 });
 
-httpServer.listen(3333, () =>
-  console.log(`Listening on http://localhost:3333 ✅`)
+const PORT = 8000;
+
+httpServer.listen(PORT, () =>
+  console.log(`✅ Server listening on http://localhost:${PORT} 🚀`)
 );
