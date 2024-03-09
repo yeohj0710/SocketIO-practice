@@ -16,8 +16,11 @@ html(lang="en")
             div#room 
                 h3
                 ul 
-                form
-                    input(placeholder="message", required, type="text")
+                form#nickname
+                    input(placeholder="닉네임을 입력하세요.", required, type="text")
+                    button 설정
+                form#message
+                    input(placeholder="메시지를 입력하세요.", required, type="text")
                     button 보내기
         script(src="/socket.io/socket.io.js")
         script(src="/public/js/app.js")
